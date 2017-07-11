@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170711 17:27:17.034" generator="Robot 3.0.2 (Python 2.7.13 on darwin)">
+<suite source="/Users/photonqa/Desktop/framework/Mobility-Automation-master/TestSuite/Tests/SME_Android_Phone.robot" id="s1" name="SME Android Phone">
+<test id="s1-t1" name="Login and Logout with correct UserID and Password">
+<kw type="setup" name="Open_Nexus_5X" library="login_SME">
+<kw name="Set Appium Timeout" library="AppiumLibrary">
+<doc>Sets the timeout in seconds used by various keywords.</doc>
+<arguments>
+<arg>30 seconds</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:17.723" starttime="20170711 17:27:17.723"></status>
+</kw>
+<kw name="Open Application" library="AppiumLibrary">
+<doc>Opens a new application to given Appium server.</doc>
+<arguments>
+<arg>${APPIUM_SERVER_URL}</arg>
+<arg>platformName=${PLATFORM_NAME}</arg>
+<arg>platformVersion=${PLATFORM_VERSION}</arg>
+<arg>deviceName=${DEVICE_NAME}</arg>
+<arg>appPackage=${PACKAGE_NAME}</arg>
+<arg>automationName=appium</arg>
+<arg>appActivity=${ACTIVITY_NAME}</arg>
+<arg>noReset=true</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:25.490" starttime="20170711 17:27:17.723"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:25.493" starttime="20170711 17:27:17.722"></status>
+</kw>
+<kw name="Login and Logout SME app" library="login_SME">
+<arguments>
+<arg>f77ckj2</arg>
+<arg>f77ctest12</arg>
+<arg>1234abcd</arg>
+</arguments>
+<kw name="Set Appium Timeout" library="AppiumLibrary">
+<doc>Sets the timeout in seconds used by various keywords.</doc>
+<arguments>
+<arg>30 seconds</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:25.500" starttime="20170711 17:27:25.498"></status>
+</kw>
+<kw name="Enter OrgID" library="login_SME">
+<arguments>
+<arg>${org_id}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_org_id</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:27.532" starttime="20170711 17:27:25.501"></status>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_org_id</arg>
+<arg>${org_id}</arg>
+</arguments>
+<msg timestamp="20170711 17:27:27.534" level="INFO">Typing text 'f77ckj2' into text field 'id=com.santander.us.sme.pre:id/et_org_id'</msg>
+<status status="PASS" endtime="20170711 17:27:32.876" starttime="20170711 17:27:27.533"></status>
+</kw>
+<kw name="Hide Keyboard" library="AppiumLibrary">
+<doc>Hides the software keyboard on the device. (optional) In iOS, use `key_name` to press</doc>
+<status status="PASS" endtime="20170711 17:27:34.355" starttime="20170711 17:27:32.877"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:34.356" starttime="20170711 17:27:25.500"></status>
+</kw>
+<kw name="Enter UserID" library="login_SME">
+<arguments>
+<arg>${user_id}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_user_id</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:34.410" starttime="20170711 17:27:34.357"></status>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_user_id</arg>
+<arg>${user_id}</arg>
+</arguments>
+<msg timestamp="20170711 17:27:34.411" level="INFO">Typing text 'f77ctest12' into text field 'id=com.santander.us.sme.pre:id/et_user_id'</msg>
+<status status="PASS" endtime="20170711 17:27:39.390" starttime="20170711 17:27:34.410"></status>
+</kw>
+<kw name="Hide Keyboard" library="AppiumLibrary">
+<doc>Hides the software keyboard on the device. (optional) In iOS, use `key_name` to press</doc>
+<status status="PASS" endtime="20170711 17:27:40.881" starttime="20170711 17:27:39.391"></status>
+</kw>
+<kw name="Scroll Element Down To View" library="Shared_Keywords">
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<kw type="for" name="${INDEX} IN RANGE [ 1 | 15 ]">
+<kw type="foritem" name="${INDEX} = 1">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>AppiumLibrary.page should contain element</arg>
+<arg>${ELEMENT}</arg>
+</arguments>
+<assign>
+<var>${present}</var>
+</assign>
+<kw name="Page Should Contain Element" library="AppiumLibrary">
+<doc>Verifies that current page contains `locator` element.</doc>
+<arguments>
+<arg>${ELEMENT}</arg>
+</arguments>
+<msg timestamp="20170711 17:27:40.935" level="INFO">Current page contains element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:27:40.935" starttime="20170711 17:27:40.885"></status>
+</kw>
+<msg timestamp="20170711 17:27:40.936" level="INFO">${present} = True</msg>
+<status status="PASS" endtime="20170711 17:27:40.936" starttime="20170711 17:27:40.884"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${present}</arg>
+<arg>Exit For Loop</arg>
+<arg>ELSE</arg>
+<arg>swipe element up</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20170711 17:27:40.938" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" endtime="20170711 17:27:40.938" starttime="20170711 17:27:40.937"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:40.939" starttime="20170711 17:27:40.936"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:40.939" starttime="20170711 17:27:40.883"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:40.939" starttime="20170711 17:27:40.883"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:40.939" starttime="20170711 17:27:40.882"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<msg timestamp="20170711 17:27:40.940" level="INFO">Clicking element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:27:41.358" starttime="20170711 17:27:40.939"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:41.359" starttime="20170711 17:27:34.356"></status>
+</kw>
+<kw name="Enter Random Question Answer" library="login_SME">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/tv_question</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:49.118" starttime="20170711 17:27:41.361"></status>
+</kw>
+<kw name="Get Login Dynamic Text" library="Shared_Keywords">
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/tv_question</arg>
+</arguments>
+<assign>
+<var>${answer}</var>
+</assign>
+<kw name="Get Text" library="AppiumLibrary">
+<doc>Get element text (for hybrid and mobile browser use `xpath` locator, others might cause problem)</doc>
+<arguments>
+<arg>${element_locator}</arg>
+</arguments>
+<assign>
+<var>${random_ques}</var>
+</assign>
+<msg timestamp="20170711 17:27:49.179" level="INFO">Element 'id=com.santander.us.sme.pre:id/tv_question' text is 'What is the first name of the maid of honor at your wedding?' </msg>
+<msg timestamp="20170711 17:27:49.179" level="INFO">${random_ques} = What is the first name of the maid of honor at your wedding?</msg>
+<status status="PASS" endtime="20170711 17:27:49.179" starttime="20170711 17:27:49.120"></status>
+</kw>
+<kw name="Split With Space" library="MyLibrary">
+<arguments>
+<arg>${random_ques}</arg>
+</arguments>
+<assign>
+<var>${answer}</var>
+</assign>
+<msg timestamp="20170711 17:27:49.181" level="INFO">${answer} = wedding?</msg>
+<status status="PASS" endtime="20170711 17:27:49.181" starttime="20170711 17:27:49.180"></status>
+</kw>
+<msg timestamp="20170711 17:27:49.181" level="INFO">${answer} = wedding?</msg>
+<status status="PASS" endtime="20170711 17:27:49.182" starttime="20170711 17:27:49.119"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_answer</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:27:49.222" starttime="20170711 17:27:49.182"></status>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_answer</arg>
+<arg>${answer}</arg>
+</arguments>
+<msg timestamp="20170711 17:27:49.223" level="INFO">Typing text 'wedding?' into text field 'id=com.santander.us.sme.pre:id/et_answer'</msg>
+<status status="PASS" endtime="20170711 17:27:54.221" starttime="20170711 17:27:49.222"></status>
+</kw>
+<kw name="Hide Keyboard" library="AppiumLibrary">
+<doc>Hides the software keyboard on the device. (optional) In iOS, use `key_name` to press</doc>
+<status status="PASS" endtime="20170711 17:27:55.682" starttime="20170711 17:27:54.222"></status>
+</kw>
+<kw name="Scroll Element Down To View" library="Shared_Keywords">
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<kw type="for" name="${INDEX} IN RANGE [ 1 | 15 ]">
+<kw type="foritem" name="${INDEX} = 1">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>AppiumLibrary.page should contain element</arg>
+<arg>${ELEMENT}</arg>
+</arguments>
+<assign>
+<var>${present}</var>
+</assign>
+<kw name="Page Should Contain Element" library="AppiumLibrary">
+<doc>Verifies that current page contains `locator` element.</doc>
+<arguments>
+<arg>${ELEMENT}</arg>
+</arguments>
+<msg timestamp="20170711 17:27:55.769" level="INFO">Current page contains element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:27:55.769" starttime="20170711 17:27:55.683"></status>
+</kw>
+<msg timestamp="20170711 17:27:55.770" level="INFO">${present} = True</msg>
+<status status="PASS" endtime="20170711 17:27:55.770" starttime="20170711 17:27:55.683"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${present}</arg>
+<arg>Exit For Loop</arg>
+<arg>ELSE</arg>
+<arg>swipe element up</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20170711 17:27:55.772" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" endtime="20170711 17:27:55.773" starttime="20170711 17:27:55.772"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:55.773" starttime="20170711 17:27:55.770"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:55.773" starttime="20170711 17:27:55.683"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:55.773" starttime="20170711 17:27:55.682"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:55.773" starttime="20170711 17:27:55.682"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<msg timestamp="20170711 17:27:55.774" level="INFO">Clicking element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:27:58.955" starttime="20170711 17:27:55.774"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:27:58.955" starttime="20170711 17:27:41.360"></status>
+</kw>
+<kw name="Enter Password" library="login_SME">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_password</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:28:00.985" starttime="20170711 17:27:58.957"></status>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/et_password</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20170711 17:28:00.986" level="INFO">Typing text '1234abcd' into text field 'id=com.santander.us.sme.pre:id/et_password'</msg>
+<status status="PASS" endtime="20170711 17:28:06.349" starttime="20170711 17:28:00.985"></status>
+</kw>
+<kw name="Hide Keyboard" library="AppiumLibrary">
+<doc>Hides the software keyboard on the device. (optional) In iOS, use `key_name` to press</doc>
+<status status="PASS" endtime="20170711 17:28:06.904" starttime="20170711 17:28:06.351"></status>
+</kw>
+<kw name="Scroll Element Down To View" library="Shared_Keywords">
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<kw type="for" name="${INDEX} IN RANGE [ 1 | 15 ]">
+<kw type="foritem" name="${INDEX} = 1">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>AppiumLibrary.page should contain element</arg>
+<arg>${ELEMENT}</arg>
+</arguments>
+<assign>
+<var>${present}</var>
+</assign>
+<kw name="Page Should Contain Element" library="AppiumLibrary">
+<doc>Verifies that current page contains `locator` element.</doc>
+<arguments>
+<arg>${ELEMENT}</arg>
+</arguments>
+<msg timestamp="20170711 17:28:07.649" level="INFO">Current page contains element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:28:07.650" starttime="20170711 17:28:06.910"></status>
+</kw>
+<msg timestamp="20170711 17:28:07.650" level="INFO">${present} = True</msg>
+<status status="PASS" endtime="20170711 17:28:07.650" starttime="20170711 17:28:06.909"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${present}</arg>
+<arg>Exit For Loop</arg>
+<arg>ELSE</arg>
+<arg>swipe element up</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20170711 17:28:07.652" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" endtime="20170711 17:28:07.653" starttime="20170711 17:28:07.652"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:07.653" starttime="20170711 17:28:07.651"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:07.653" starttime="20170711 17:28:06.909"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:07.653" starttime="20170711 17:28:06.908"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:07.653" starttime="20170711 17:28:06.907"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_continue</arg>
+</arguments>
+<msg timestamp="20170711 17:28:07.654" level="INFO">Clicking element 'id=com.santander.us.sme.pre:id/bt_continue'.</msg>
+<status status="PASS" endtime="20170711 17:28:10.820" starttime="20170711 17:28:07.654"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:10.820" starttime="20170711 17:27:58.956"></status>
+</kw>
+<kw name="Log Off App" library="login_SME">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/action_menu</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:28:18.557" starttime="20170711 17:28:10.821"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/action_menu</arg>
+</arguments>
+<msg timestamp="20170711 17:28:18.558" level="INFO">Clicking element 'id=com.santander.us.sme.pre:id/action_menu'.</msg>
+<status status="PASS" endtime="20170711 17:28:18.845" starttime="20170711 17:28:18.558"></status>
+</kw>
+<kw name="Scroll Element Down To View" library="Shared_Keywords">
+<arguments>
+<arg>xpath=//android.widget.TextView[contains(@text,'Log off')]</arg>
+</arguments>
+<kw type="for" name="${INDEX} IN RANGE [ 1 | 15 ]">
+<kw type="foritem" name="${INDEX} = 1">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>AppiumLibrary.page should contain element</arg>
+<arg>${ELEMENT}</arg>
+</arguments>
+<assign>
+<var>${present}</var>
+</assign>
+<kw name="Page Should Contain Element" library="AppiumLibrary">
+<doc>Verifies that current page contains `locator` element.</doc>
+<arguments>
+<arg>${ELEMENT}</arg>
+</arguments>
+<msg timestamp="20170711 17:28:19.772" level="INFO">Current page contains element 'xpath=//android.widget.TextView[contains(@text,'Log off')]'.</msg>
+<status status="PASS" endtime="20170711 17:28:19.772" starttime="20170711 17:28:18.848"></status>
+</kw>
+<msg timestamp="20170711 17:28:19.772" level="INFO">${present} = True</msg>
+<status status="PASS" endtime="20170711 17:28:19.772" starttime="20170711 17:28:18.847"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${present}</arg>
+<arg>Exit For Loop</arg>
+<arg>ELSE</arg>
+<arg>swipe element up</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20170711 17:28:19.774" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" endtime="20170711 17:28:19.774" starttime="20170711 17:28:19.774"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:19.775" starttime="20170711 17:28:19.773"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:19.775" starttime="20170711 17:28:18.847"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:19.775" starttime="20170711 17:28:18.846"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:19.775" starttime="20170711 17:28:18.846"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[contains(@text,'Log off')]</arg>
+</arguments>
+<msg timestamp="20170711 17:28:19.776" level="INFO">Clicking element 'xpath=//android.widget.TextView[contains(@text,'Log off')]'.</msg>
+<status status="PASS" endtime="20170711 17:28:20.138" starttime="20170711 17:28:19.775"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/alertTitle</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:28:20.895" starttime="20170711 17:28:20.138"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=android:id/button1</arg>
+</arguments>
+<msg timestamp="20170711 17:28:20.896" level="INFO">Clicking element 'id=android:id/button1'.</msg>
+<status status="PASS" endtime="20170711 17:28:21.508" starttime="20170711 17:28:20.895"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.santander.us.sme.pre:id/bt_forgot_password</arg>
+</arguments>
+<status status="PASS" endtime="20170711 17:28:21.967" starttime="20170711 17:28:21.508"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:21.967" starttime="20170711 17:28:10.821"></status>
+</kw>
+<status status="PASS" endtime="20170711 17:28:21.968" starttime="20170711 17:27:25.495"></status>
+</kw>
+<kw type="teardown" name="Close Application" library="AppiumLibrary">
+<doc>Closes the current application.</doc>
+<status status="PASS" endtime="20170711 17:28:24.662" starttime="20170711 17:28:21.969"></status>
+</kw>
+<tags>
+<tag>Login</tag>
+<tag>Login_Positive</tag>
+</tags>
+<status status="PASS" endtime="20170711 17:28:24.662" critical="yes" starttime="20170711 17:27:17.721"></status>
+</test>
+<doc>Android Phone Report</doc>
+<status status="PASS" endtime="20170711 17:28:24.664" starttime="20170711 17:27:17.037"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+<stat fail="0" pass="1">Login</stat>
+<stat fail="0" pass="1">Login_Positive</stat>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="SME Android Phone" pass="1">SME Android Phone</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

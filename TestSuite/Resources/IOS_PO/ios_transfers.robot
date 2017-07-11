@@ -1,0 +1,137 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Library        robot.libraries.String
+Resource       ../common.robot
+Resource       ios_main_menu.robot
+*** Keywords ***
+
+
+Make Transfer Beetween Account
+    [Arguments]  ${account1}  ${account2}
+    set appium timeout  60 seconds
+    ios_main_menu.go to transfer between my accounts
+    AppiumLibrary.wait until element is visible   from_account_carousell
+    common.Dynamic Swip Left    from_account_carousell
+    #common.Dynamic Swip Left    to_account_carousell
+    AppiumLibrary.input text   amount_field  1.00
+    AppiumLibrary.click element   TO ACCOUNT
+    common.swipe element up
+    common.scroll down to view   continue_btn
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element  continue_btn
+    AppiumLibrary.wait until page contains element   TRANSFER AMOUNT
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element    //XCUIElementTypeButton[@name=\"confirm_btn\"]   #confirm_btn
+    AppiumLibrary.wait until element is visible   Transfer completed successfully
+    #AppiumLibrary.page should contain element   *5706
+    #AppiumLibrary.page should contain element   *2098
+    AppiumLibrary.page should contain element    email_btn
+    AppiumLibrary.page should contain element    sms_btn
+    AppiumLibrary.click element   ok_btn
+
+#    log to console  ${text}
+#    swipe  1000  614  100  614  2000
+#    input text  id=et_amount    1.00
+#    hide keyboard
+#    swipe  1000  614  0  100  2000
+#    capture page screenshot
+#    click element  id=bt_continue
+#    wait until element is visible  xpath=//*[contains(@text,'TRANSFER DATE')]
+#    click element  id=bt_continue
+#    wait until element is visible  id=tv_transaction_completed
+#    capture page screenshot
+#    click element  id=bt_continue
+#    wait until element is visible  id=et_amount
+
+Make Transfer Beetween Account Future
+    [Arguments]  ${account1}  ${account2}  ${Date}
+    set appium timeout  60 seconds
+    ios_main_menu.go to transfer between my accounts
+    AppiumLibrary.wait until element is visible   from_account_carousell
+    common.Dynamic Swip Left    from_account_carousell
+    #common.Dynamic Swip Left    to_account_carousell
+    AppiumLibrary.input text   amount_field  1.00
+    AppiumLibrary.click element   TO ACCOUNT
+    common.swipe element up
+    common.scroll down to view   continue_btn
+    sleep   10s
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element  continue_btn
+    AppiumLibrary.wait until page contains element   TRANSFER AMOUNT
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element    //XCUIElementTypeButton[@name=\"confirm_btn\"]   #confirm_btn
+    AppiumLibrary.wait until element is visible   Transfer completed successfully
+    #AppiumLibrary.page should contain element   *5706
+    #AppiumLibrary.page should contain element   *2098
+    AppiumLibrary.page should contain element    email_btn
+    AppiumLibrary.page should contain element    sms_btn
+    AppiumLibrary.click element   ok_btn
+
+Make Transfer To Someone else
+    [Arguments]  ${account1}  ${account2}
+    set appium timeout  60 seconds
+    ios_main_menu.go to transfer to someone else
+    AppiumLibrary.wait until element is visible   from_account_carousell
+    common.Dynamic Swip Left    from_account_carousell
+    #common.Dynamic Swip Left    to_account_carousell
+    AppiumLibrary.input text   amount_field  1.00
+    common.swipe element up
+    common.scroll down to view   continue_btn
+    sleep   10s
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element  continue_btn
+    AppiumLibrary.wait until page contains element   TRANSFER AMOUNT
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element    //XCUIElementTypeButton[@name="confirm_btn"]   #confirm_btn
+    AppiumLibrary.wait until element is visible   Transfer completed successfully
+    AppiumLibrary.capture page screenshot
+    #AppiumLibrary.page should contain element   *5706
+    #AppiumLibrary.page should contain element   *2098
+    AppiumLibrary.page should contain element    email_btn
+    AppiumLibrary.page should contain element    sms_btn
+    AppiumLibrary.click element   ok_btn
+
+Make Transfer To Someone Else Future
+    [Arguments]  ${account1}  ${account2}  ${date}
+    set appium timeout  60 seconds
+    ios_main_menu.go to transfer to someone else
+    AppiumLibrary.wait until element is visible   from_account_carousell
+    common.Dynamic Swip Left    from_account_carousell
+    #common.Dynamic Swip Left    to_account_carousell
+    AppiumLibrary.input text   amount_field  1.00
+    sleep  10s
+    common.swipe element up
+    common.scroll down to view   continue_btn
+    sleep   10s
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element  continue_btn
+    AppiumLibrary.wait until page contains element   TRANSFER AMOUNT
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element    //XCUIElementTypeButton[@name="confirm_btn"]   #confirm_btn
+    AppiumLibrary.wait until element is visible   Transfer completed successfully
+    AppiumLibrary.capture page screenshot
+    #AppiumLibrary.page should contain element   *5706
+    #AppiumLibrary.page should contain element   *2098
+    AppiumLibrary.page should contain element    email_btn
+    AppiumLibrary.page should contain element    sms_btn
+    AppiumLibrary.click element   ok_btn
+
+Select Account From Top Slider
+     [Arguments]  ${my_account}
+      ${count}  get element size    xpath=//android.support.v4.view.ViewPager[1]//*[contains(@resource-id,'tv_available_balance')]
+      log to console  ${count}
+      : FOR    ${INDEX}    IN RANGE    0    15
+       \  ${present}   run keyword and return status         element should be enabled       xpath=//android.support.v4.view.ViewPager[1]//android.widget.TextView[contains(@text,'${my_account}')]   ${my_account}
+       \  log to console   ${present}
+       \  run keyword if    ${present}    Exit For Loop     ELSE     swipe element left
+
+Select Account From Bottom Slider
+      [Arguments]  ${my_account}
+
+      ${count}  get element size    xpath=//android.support.v4.view.ViewPager//*[contains(@resource-id,'tv_available_balance')][1]
+      log to console  ${count}
+      : FOR    ${INDEX}    IN RANGE    1    15
+       \  ${present}   run keyword and return status         element should be enabled       xpath=//android.support.v4.view.ViewPager[1]//android.widget.TextView[contains(@text,'${my_account}')]   #${my_account}
+       \  log to console   ${present}
+       \  run keyword if    ${present}    Exit For Loop     ELSE     swipe  1000  1000  200  1000  2000

@@ -1,0 +1,240 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Library        robot.libraries.Collections
+Library        OperatingSystem
+#C:\Users\x368871\AppData\Local\Android\Sdk
+*** Variables ***
+#Mobile Set up
+
+${REMOTE_URL}                           http://0.0.0.0:4723/wd/hub      # URL to appium server
+${ANDROID_AUTOMATION_NAME}              appium
+${IOS_AUTOMATION_NAME}                  XCUITEST
+${PLATFORM_NAME_ANDROID}                android
+${PLATFORM_NAME_IOS}                    iOS
+
+# Android Set Up
+
+${PLATFORM_VERSION_ANDROID}             5.1.1
+${ANDROID_DEVICE_NAME}                  4894f736
+${ANDROID_PACKAGE_NAME}                 com.santander.us.mob.pre
+${ANDROID_ACTIVITY_NAME}                com.santander.pruebas.SplashActivity
+
+#Iphone Set Up
+
+${PLATFORM_VERSION_IOS}                 10.0.2
+${IOS_DEVICE_NAME}                      LCO iPhone 6 plus
+${IOS_UDID}                             0263c77067fbc728fd0c35c3310f2fcb29ebd128
+${IOS_APP_LOCATION}                     /Users/produbanlco/Documents/IOS/Main_Retail_App_032817.ipa        #/Users/produbanlco/Documents/IOS/RetailUsa-PRE.ipa
+${IOS_BUNDLE_ID}                        com.sovereign.santander.us.public..Personal-Banking-PRE
+
+#Ipad Set Up
+
+${IPAD_PLATFORM_VERSION_IOS}             10.0.2
+${IPAD_DEVICE_NAME}                      LCO Boston iPad Air Ib
+${IPAD_UDID}                             2326b6010a7f5d2de2dd956b6402339114728aec
+${IPAD_APP_LOCATION}                     /Users/produbanlco/Documents/IOS/Main_Retail_App_032817.ipa   #/Users/produbanlco/Documents/IOS/RetailUsa-PRE.ipa
+${IPAD_BUNDLE_ID}                        com.sovereign.santander.us.public..Personal-Banking-PRE
+
+# Android Simulator Set Up
+
+${PLATFORM_VERSION_ANDROID_SIM}          5.1.1
+${ANDROID_SIM_DEVICE_NAME}               4894f736
+${ANDROID_SIM_PACKAGE_NAME}              com.santander.us.mob.pre
+${ANDROID_SIM_ACTIVITY_NAME}             com.santander.pruebas.SplashActivity
+
+#IOS Simulator Set Up
+
+${PLATFORM_VERSION_IOS_SIM}              10.2
+${IOS_SIM_DEVICE_NAME}                   iphone Simulator
+${IOS_SIM_UDID}                          A2DB7A1B-7FC1-40B2-A98A-C77C36BA3CC9
+${IOS_SIM_APP_LOCATION}                  /Users/lco/Documents/IPA/IOS-Ret/Main_Retail_App (iPhone6IOS10.3).app   #/Users/produbanlco/Documents/IOS/RetailUsa-PRE.ipa
+${IOS_SIM_BUNDLE_ID}                     com.sovereign.santander.us.public..Personal-Banking-PRE
+
+
+*** Keywords ***
+Open android mobile
+    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME_ANDROID}    platformVersion=${PLATFORM_VERSION_ANDROID}     deviceName=${ANDROID_DEVICE_NAME}         appPackage=${ANDROID_PACKAGE_NAME}      automationName=appium       appActivity=${ANDROID_ACTIVITY_NAME}
+
+Open iphone
+    Open Application    http://0.0.0.0:4723/wd/hub    platformName=${PLATFORM_NAME_IOS}    platformVersion=${PLATFORM_VERSION_IOS}     deviceName=${IOS_DEVICE_NAME}             automationName=${IOS_AUTOMATION_NAME}        bundleId=${IOS_BUNDLE_ID}      udid=4defea43bceff9fa03c59585397b7ab5242433ae                noReset=true       nativeInstrumentsLib=true      showIOSLog=false    #preventWDAAttachments=false     #useNewWDA=true        #app=${IOS_APP_LOCATION}
+Open iphone 5S
+    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME_IOS}    platformVersion=${IPAD_PLATFORM_VERSION_IOS}      deviceName=${IPAD_DEVICE_NAME}             automationName=${IOS_AUTOMATION_NAME}        bundleId=${IPAD_BUNDLE_ID}           udid=${IPAD_UDID}        iosInstallPause=10000         usePrebuiltWDA=true    #fullReset=true     #usePrebuiltWDA=true   webDriverAgentUrl=http://localhost:8100     #useNewWDA=true  #usePrebuiltWDA=true    app=${IPAD_APP_LOCATION}
+Open SpringBoard
+
+    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME_IOS}    platformVersion=${PLATFORM_VERSION_IOS}     deviceName=${IOS_DEVICE_NAME}             automationName=${IOS_AUTOMATION_NAME}        bundleId=${IOS_BUNDLE_ID}      udid=${IOS_UDID}
+Open android simulator
+    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME_ANDROID}    platformVersion=${PLATFORM_VERSION_ANDROID_SIM}     deviceName=${ANDROID_SIM_DEVICE_NAME}         appPackage=${ANDROID_SIM_PACKAGE_NAME}      automationName=appium       appActivity=${ANDROID_SIM_ACTIVITY_NAME}
+Open iphone 6 Plus
+    Open Application    ${REMOTE_URL}
+    ...  platformName=${PLATFORM_NAME_IOS}
+    ...  platformVersion=10.3
+    ...  deviceName=${IOS_SIM_DEVICE_NAME}
+    ...  automationName=${IOS_AUTOMATION_NAME}
+    ...  bundleId=com.sovereign.santander.us.public.Personal-Banking-PRE
+    ...  udid=0263c77067fbc728fd0c35c3310f2fcb29ebd128
+    #...  udid=0263c77067fbc728fd0c35c3310f2fcb29ebd128
+    #...  useNewWDA=true
+    ...  noReset=True
+    ...  usePrebuiltWDA=True
+    #...  nativeInstrumentsLib=true
+    #...   app=/Users/lco/Downloads/Main_Retail_App_test3.app
+Open iphone simulator
+    Open Application    ${REMOTE_URL}
+    ...  platformName=${PLATFORM_NAME_IOS}
+    ...  platformVersion=10.3
+    ...  deviceName=${IOS_SIM_DEVICE_NAME}
+    ...  automationName=${IOS_AUTOMATION_NAME}
+    ...  bundleId=com.sovereign.santander.us.public.Personal-Banking-PRE
+    ...  udid=D3840B13-D013-4308-B79E-59C49A3F782D
+    #...  udid=0263c77067fbc728fd0c35c3310f2fcb29ebd128
+    #...  useNewWDA=true
+   # ...  fullReset=True
+    ...  usePrebuiltWDA=True
+    #...  nativeInstrumentsLib=true
+    #...   app=/Users/lco/Downloads/Main_Retail_App_test3.app
+Open iPad Simulator
+    Open Application    ${REMOTE_URL}
+    ...  platformName=${PLATFORM_NAME_IOS}
+    ...  platformVersion=10.3
+    ...  deviceName=iPad Air 2
+    ...  automationName=${IOS_AUTOMATION_NAME}
+    ...  bundleId=com.sovereign.santander.us.public.Personal-Banking-PRE
+    ...  udid=274D343C-6C48-40B7-A4D3-52B7D348DEFB
+    #...  udid=0263c77067fbc728fd0c35c3310f2fcb29ebd128
+    #...  useNewWDA=true
+    ...  noReset=True
+    ...  usePrebuiltWDA=True
+    #...  nativeInstrumentsLib=true
+    ...   app=/Users/lco/Documents/IPA/Retail b96 iPad Air 2 x10.3.app
+
+Close All Apps
+     Close All Applications
+
+
+Log Out App
+     AppiumLibrary.click element  xpath=//*[contains(@resource-id,'id/action_menu')]
+     wait until element is visible  xpath=//*[contains(@text,'Transfers Funds')]
+     scroll down  xpath=//*[contains(@text,'Log off')]
+     AppiumLibrary.click element  xpath=//*[contains(@text,'Log off')]
+
+     wait until element is visible  xpath=//*[contains(@text,'Are you sure you want to log off?')]
+     AppiumLibrary.click element  xpath=//android.widget.Button[@text,'OK')]
+     wait until element is visible  xpath=//android.widget.Button[@text,'Forgot your password?')]
+
+Return To Overview
+    : FOR    ${INDEX}    IN RANGE    1    10
+       \  ${present}  run keyword and return status           AppiumLibrary.page should contain element    name=My Money
+       \  run keyword if  ${present}  Exit For Loop   ELSE    AppiumLibrary.click element                  xpath=//XCUIElementTypeNavigationBar/XCUIElementTypeButton
+
+
+Scroll Down To View
+    [Arguments]  ${ELEMENT}
+     : FOR    ${INDEX}    IN RANGE    1    15
+       \  ${present}  run keyword and return status  AppiumLibrary.page should contain element    ${ELEMENT}
+       \  run keyword if  ${present}  Exit For Loop  ELSE    AppiumLibrary.swipe  1000  614  0  -400  1000
+       \  log to console  ${present}
+Scroll Up To View
+    [Arguments]  ${ELEMENT}
+     : FOR    ${INDEX}    IN RANGE    1    5
+       \  ${present}  run keyword and return status  AppiumLibrary.page should contain element    ${ELEMENT}
+       \  run keyword if  ${present}  Exit For Loop  ELSE   common.swipe element down
+
+For-Loop-In-Range
+    : FOR    ${INDEX}    IN RANGE    1    3
+    \    Log    ${INDEX}
+    \    ${RANDOM_STRING}=    Generate Random String    ${INDEX}
+    \    Log    ${RANDOM_STRING}
+
+For-Loop-Elements
+    @{ITEMS}    Create List    Star Trek    Star Wars    Perry Rhodan
+    :FOR    ${ELEMENT}    IN    @{ITEMS}
+    \    Log    ${ELEMENT}
+    \    ${ELEMENT}    Replace String    ${ELEMENT}    ${SPACE}    ${EMPTY}
+    \    Log    ${ELEMENT}
+
+For-Loop-Exiting
+    @{ITEMS}    Create List    Good Element 1    Break On Me    Good Element 2
+    :FOR    ${ELEMENT}    IN    @{ITEMS}
+    \    Log    ${ELEMENT}
+    \    Run Keyword If    '${ELEMENT}' == 'Break On Me'    Exit For Loop
+    \    Log    Do more actions here ...
+
+Set Calendar Date
+    [Arguments]  ${mydate}
+    Find Calendar Month   ${mydate}
+    #wait until element is visible  id=date_picker_year
+    AppiumLibrary.click element  xpath=//android.view.View[contains(@content-desc,'${mydate}')]
+    capture page screenshot
+    AppiumLibrary.click element  id=button1
+
+Find Calendar Month
+    [Arguments]  ${mydate}
+    wait until element is visible  id=date_picker_year
+
+    : FOR    ${INDEX}    IN RANGE    1    20
+       \  ${present}  run keyword and return status      AppiumLibrary.page should contain element     xpath=//android.view.View[contains(@content-desc,'${mydate}')]
+       \  run keyword if  ${present}  Exit For Loop   ELSE    swipe element down
+
+
+Swipe Element Up
+    AppiumLibrary.swipe  1000  614  0  -400  1000
+
+Swipe Element Down
+    AppiumLibrary.swipe  537  926  0  1417  2000
+
+Swipe Element Left
+    AppiumLibrary.swipe  1000  614  100  614  2000
+    sleep  3s
+Write Into Textfield
+    [Arguments]    ${text_object}   ${text}
+    AppiumLibrary.input text     ${text_object}   ${text}
+
+    AppiumLibrary.click element     //XCUIElementTypeStaticText["wdName=='Hide keyboard'"]
+
+Wait Until Loading Not Visible
+    AppiumLibrary.wait until page does not contain element       //XCUIElementTypeStaticText["wdName=Loading, please wait..."]
+
+Dynamic Swip Left
+    [Arguments]  ${locator}
+    &{loc}  common.Get Element Area  ${locator}   #animator
+    ${height}=    Evaluate    &{loc}[end_y] - 50
+    ${start}=  Evaluate  - &{loc}[end_x]
+    log to console    ${height}
+    AppiumLibrary.swipe    &{loc}[end_x]    ${height}   ${start}   ${height}   1000
+
+#    Go To Forgot Password Screen
+#    AppiumLibrary.click element  //XCUIElementTypeButton["wdName==Continue"]/../XCUIElementTypeButton[1]
+#    AppiumLibrary.wait until element is visible   //XCUIElementTypePickerWheel
+#    set_ios_date_picker  "10/01/2017"
+#    AppiumLibrary.click button  Done
+#    #AppiumLibrary.click element    //XCUIElementTypeButton["wdLabel==Done"]
+#    ${st}  AppiumLibrary.get source
+#    log  ${st}
+#    AppiumLibrary.capture page screenshot
+#    sleep  5s
+
+Get Element Area
+    [Arguments]  ${element_locator}
+    ${LOCATION}      AppiumLibrary.get element location    ${element_locator}
+
+    ${SIZE}    AppiumLibrary.get element size   ${element_locator}
+
+    ${x}   get from dictionary    ${LOCATION}    x
+    ${y}   get from dictionary    ${LOCATION}    y
+    ${x}  convert to integer  ${x}
+    ${y}  convert to integer  ${y}
+    ${WIDTH}    get from dictionary   ${SIZE}     width
+    ${HEIGHT}   get from dictionary   ${SIZE}    height
+    ${WIDTH}  convert to integer  ${WIDTH}
+    ${HEIGHT}  convert to integer  ${HEIGHT}
+    ${START_X}  set variable  ${x}
+    ${START_Y}  set variable  ${y}
+    ${end_X}  Evaluate     ${x}+${WIDTH}
+    ${end_Y}  Evaluate    ${y}+${HEIGHT} / 2
+    &{dict}   Create Dictionary   start_x=${x}   start_y=${y}   end_x=${end_x}   end_y=${end_y}
+    #AppiumLibrary.swipe  ${x}  ${y}  0  ${END_Y}  1000
+    [Return]  &{dict}
+
+Setup chromedriver
+  Set Environment Variable  webdriver.chrome.driver   ../WebDrivers/chromedriver 2

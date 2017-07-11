@@ -1,0 +1,119 @@
+from robot.libraries.BuiltIn import BuiltIn
+from robot.api import logger
+import os
+import robot
+import datetime
+from selenium.webdriver import android
+import AppiumLibrary
+from AppiumLibrary.keywords import _touch
+
+from AppiumLibrary.keywords._touch import _TouchKeywords
+ROBOT_LIBRARY_SCOPE = 'Global'
+
+def click_object_down(locator):
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    newlib.click_element(locator)
+
+def  _test_scroll(locator):
+    loc = {}
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    loc = newlib.get_element_location(locator)
+    start_x = int(loc['x'])
+    start_y = int(loc['y'])
+    logger.console(start_x)
+    logger.console(start_y)
+    newlib.swipe(start_x,start_y,0,100,500)
+
+def  scroll_up_to_find_element(locator,element_to_find,steps=200):
+    loc = {}
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    loc = newlib.get_element_location(locator)
+    start_x = int(loc['x'])
+    start_y = int(loc['y'])
+    count = 0
+    visible = newlib._is_visible(element_to_find)
+    logger.console(visible)
+    while (count < 10):
+        visible = newlib._is_visible(element_to_find)
+        if visible is None:
+            newlib.swipe(start_x, start_y, 0, steps, 1000)
+            #time.sleep(3)
+            count = count + 1
+        else:
+            break
+
+
+
+def  scroll_down_to_find_element(locator,element_to_find,steps= 150):
+    loc = {}
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    loc = newlib.get_element_location(locator)
+    start_x = int(loc['x'])
+    start_y = int(loc['y'])
+    count = 0
+    visible = newlib._is_visible(element_to_find)
+    logger.console(visible)
+    while (count < 10):
+        visible = newlib._is_visible(element_to_find)
+        if visible is None:
+            newlib.swipe(930, 1400, 0, -150, 1000)
+            #time.sleep(3)
+            count = count + 1
+        else:
+            break
+
+def  set_ios_date_picker(mydate):
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    Odate = datetime.datetime.strptime(mydate, "%d%m%Y")
+    logger.console(Odate)
+    my_month = get_new_month_name(mydate)
+    my_day = str(Odate.day)
+    my_year = str(Odate.year)
+    logger.console(my_month)
+    wheel = newlib._find_elements_by_class_name("XCUIElementTypePickerWheel")
+    #Set Month
+    wheel[0].set_value(my_month)
+    #Set Day
+    wheel[1].set_value(my_day)
+    #set Year
+    wheel[2].set_value(my_year)
+
+def set_android_calendar_date(date):
+    newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    # day = datetime.date(date)
+    # logger.console(day)
+    newlib.click_element('date_picker_header_year')
+    wheel = newlib._find_elements_by_class_name("android.widget.DatePicker")
+    wheel[1].input_value("13")
+    wheel[2].set_value("2016")
+
+def scroll_try(locator):
+    # newlib = BuiltIn().get_library_instance("AppiumLibrary")
+    # element = newlib._element_find(locator, True, True)
+    # element.set_value("6/2/2017")
+
+
+
+ def _get_screenshot_paths(self, filename):
+        if not filename:
+            self._screenshot_index += 1
+            filename = 'appium-screenshot-%d.png' % self._screenshot_index
+        else:
+            self._screenshot_index += 1
+            filename = filename + '-%d.png' % self._screenshot_index
+            #filename = filename.replace('/', os.sep)
+        logdir = self._get_log_dir()
+        path = os.path.join(logdir, filename)
+        link = robot.utils.get_link_path(path, logdir)
+        return path, link
+
+ def get_capabilitites(capability):
+     AppiumLibrary.AppiumLibrary.getCapability()
+
+
+def  get_new_month_name(mydate):
+    datee = datetime.datetime.strptime(mydate, "%d%m%Y")
+    mymonth = str(datee.month)
+    month_names = {'1':'January','2':'Februrary','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}
+    selected_month  = str(month_names[mymonth])
+    return selected_month

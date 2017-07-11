@@ -1,0 +1,64 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Library        robot.libraries.String
+Resource       ../Shared_Keywords.robot
+*** Keywords ***
+
+My_Money_Account_Overview
+    [Arguments]  ${account1}
+    [Documentation]  Validate overview page objects. need credential with a creditcard
+    [Tags]  My_Money_Account_Overview
+    set appium timeout  10 seconds
+    AppiumLibrary.wait until element is visible  id=iv_toolbar_logo
+    log  Santander log is visible
+    AppiumLibrary.wait until element is visible  id=action_menu
+    log  Menu Butoon is visible
+    AppiumLibrary.Page Should Contain Text       My Money
+    log  My money botton is visible
+    AppiumLibrary.wait until element is visible  id=tv_amount_overview
+    log  Total Amount is visible
+    AppiumLibrary.wait until element is visible  xpath=//*[contains(@text,'Checking, Savings & Money')]
+    log  My money is visible
+    AppiumLibrary.wait until page contains element  xpath=//android.widget.ImageView[@index='0']
+    log  Wallet icon visible
+    get screenshot
+    Select Credit Card Account  ${account1}
+#    Shared_Keywords.Scroll Element Down To View    xpath=//*[contains(@text,'${account1}')]
+#    get screenshot
+#    AppiumLibrary.click element      xpath=//*[contains(@text,'${account1}')]
+#    log  User collpases the Drop Down for Credit Cards
+#    AppiumLibrary.wait until element is visible   xpath=//*[contains(@text,'I WANT TO …')]
+#    get screenshot
+    Return To Overview
+Tablet Account_Overview
+    [Arguments]  ${account1}
+    [Documentation]  Validate overview page objects. need credential with a creditcard
+    [Tags]  My_Money_Account_Overview
+    set appium timeout  10 seconds
+    AppiumLibrary.wait until element is visible  id=iv_toolbar_logo
+    log  Santander log is visible
+    AppiumLibrary.wait until element is visible  id=action_menu
+    log  Menu Butoon is visible
+    AppiumLibrary.Page Should Contain Text       My Money
+    log  My money botton is visible
+    AppiumLibrary.wait until element is visible  id=tv_amount_overview
+    log  Total Amount is visible
+    AppiumLibrary.wait until element is visible  xpath=//*[contains(@text,'Checking, Savings & Money')]
+    log  My money is visible
+    AppiumLibrary.wait until page contains element  xpath=//android.widget.ImageView[@index='0']
+    log  Wallet icon visible
+    get screenshot
+    #Shared_Keywords.Scroll Element Down To View     //android.widget.TextView[@text,'Credit Cards']
+    AppiumLibrary.click element     xpath=//*[contains(@text,'Credit Cards')]
+    get screenshot
+    AppiumLibrary.click element      xpath=//*[contains(@text,'${account1}')]
+    #Shared_Keywords.Scroll Element Down To View    xpath=//*[contains(@text,'${cc_account}')]
+    get screenshot
+    log  User collpases the Drop Down for Credit Cards
+    AppiumLibrary.click element     xpath=//*[contains(@text,'${account1}')]
+    AppiumLibrary.wait until page contains element     xpath=//*[contains(@text,'ACTIVITY')]
+    get screenshot
+
+    Return To Overview
+

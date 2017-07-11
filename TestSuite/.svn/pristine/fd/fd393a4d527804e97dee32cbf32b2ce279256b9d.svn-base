@@ -1,0 +1,324 @@
+*** Settings ***
+Library         AppiumLibrary      # run_on_failure=get screenshot
+#Library        ExcelLibrary
+Resource       ../Resources/Shared_Keywords.robot
+
+*** Keywords ***
+
+Leave in the middle
+    [Arguments]  ${temp_user}     ${temp_password}      ${account}      ${user_id}      ${password}
+    [Documentation]  First time login with temp id and temp id from ROB portal and leave the process in the middle. a unique user id. requires own id.
+     set appium timeout  30 seconds
+     go to account authentication screen  ${temp_user}     ${temp_password}
+     AppiumLibrary.click element    id=product_card_view
+     #AppiumLibrary.click element    id=product_account_view
+     get screenshot
+     AppiumLibrary.input text    id=et_product_identifier   ${account}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until element is visible    id=tv_step_description
+     Page Should Contain Text         Set up your Login Info
+     get screenshot
+#     AppiumLibrary.click element     id=action_help
+#     AppiumLibrary.wait until element is visible   id=tv_text
+#     log  Help Message is visible
+#     get screenshot
+#     AppiumLibrary.click element        id=ib_close
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_user_id      ${user_id}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_verify_user_id    ${user_id}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.Page Should Contain Text         New User ID
+     AppiumLibrary.Page Should Contain Text         Verify your New User ID
+     AppiumLibrary.Page Should Contain Text         New Password
+     AppiumLibrary.Page Should Contain Text         Verify your New Password
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_password     ${password}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=et_verify_password        ${password}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains       Your User ID and Password have been created
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains     Electronic Communications Disclosure
+     get screenshot
+     AppiumLibrary.click element   id=cb_accept
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains     Online Banking Agreement
+     get screenshot
+     AppiumLibrary.click element     id=cb_accept
+     get screenshot
+     AppiumLibrary.element attribute should match    id=bt_continue      enabled     true
+     AppiumLibrary.go back
+     start activity   com.sovereign.santander.pre   com.santander.pruebas.SplashActivity
+     sleep  3s
+#     AppiumLibrary.click element      id=bt_continue
+#     AppiumLibrary.wait until page contains     Select your Santander Secure Image
+#     Log  Select your Santander Secure Image is Visible
+#     get screenshot
+#     AppiumLibrary.Page Should Contain Text     Select Category
+#     Log  Select Category is visible
+#     AppiumLibrary.Page Should Contain Text     Select your Image
+#     Log  Select your Image is visible
+#     AppiumLibrary.Page Should Contain Text     Set up Profile Information
+#     Log   Set up Profile Information is visible
+#     AppiumLibrary.Page Should Contain Text     First Time Login
+#     Log   First Time Login is visible
+#     AppiumLibrary.Page Should Contain Text   Step 3/4
+#     log  Phase 3 is visible
+#     AppiumLibrary.click element      xpath=//android.support.v7.widget.RecyclerView/android.widget.LinearLayout
+#     get screenshot
+#     Scroll Element Down To View    id=et_phrase
+#     AppiumLibrary.input text    id=et_phrase      mobileretails
+#     AppiumLibrary.hide keyboard
+#     Scroll Element Down To View    et_challenge_1
+#     AppiumLibrary.input text    et_challenge_1      test
+#     AppiumLibrary.hide keyboard
+#     Scroll Element Down To View    et_challenge_2
+#     AppiumLibrary.input text    et_challenge_2      test
+#     AppiumLibrary.hide keyboard
+#     Scroll Element Down To View    et_challenge_3
+#     AppiumLibrary.input text    et_challenge_3      test
+#     AppiumLibrary.hide keyboard
+#     Scroll Element Down To View       id=bt_continue
+#     AppiumLibrary.click element      id=bt_continue
+#     AppiumLibrary.Page Should Contain Text    Verify your Santander Secure Access Information
+#     Scroll Element Down To View   id=bt_continue
+#     AppiumLibrary.click element      id=bt_continue
+#     AppiumLibrary.Close Application
+#     AppiumLibrary.page should not contain text      Error
+
+Edit SSA fields
+    [Arguments]  ${user}   ${answer}    ${password}
+    [Documentation]  Open Banking app
+    set appium timeout  30 seconds
+     AppiumLibrary.wait until element is visible  xpath=//*[contains(@resource-id,'et_user_id')]
+     Shared_Keywords.get screenshot
+     AppiumLibrary.input text  xpath=//*[contains(@resource-id,'et_user_id')]  ${user}
+Incorrect Account number Error Message
+    [Arguments]  ${temp_user}      ${temp_password}   ${account_numbers}
+    [Documentation]  The purpose of this test is to validate the error message by entering the wrong account number for first time login users
+     set appium timeout  30 seconds
+     go to account authentication screen   ${temp_user}      ${temp_password}
+     Add Account   ${account_numbers}
+     Shared_Keywords.Validate Message Error    We did not recognize the Account Number you entered. Please try again.
+Incorrect Debit Card number Error Message
+    [Arguments]  ${temp_user}      ${temp_password}   ${account_numbers}
+    [Documentation]  The purpose of this test is to validate the error message by entering the wrong account number for first time login users
+    set appium timeout  30 seconds
+    go to account authentication screen   ${temp_user}      ${temp_password}
+    Add Account   ${account_numbers}
+    Shared_Keywords.Validate Message Error   We did not recognize the Credit/Debit Card Number you entered. Please try again.
+Incorrect Credit Card number Error Message
+    [Arguments]  ${temp_user}      ${temp_password}   ${account_numbers}
+    [Documentation]  The purpose of this test is to validate the error message by entering the wrong account number for first time login users
+    set appium timeout  30 seconds
+    go to account authentication screen   ${temp_user}      ${temp_password}
+    Add Account   ${account_numbers}
+    Shared_Keywords.Validate Message Error  We did not recognize the Credit/Debit Card Number you entered. Please try again.
+New Password Negative
+    [Arguments]  ${temp_user}      ${temp_password}   ${account_numbers}  ${user_id}    ${user_password}
+    [Documentation]  Open Banking app
+    set appium timeout  30 seconds
+    go to set up login info  ${temp_user}      ${temp_password}   ${account_numbers}  ${user_id}    ${user_password}
+    Negative Set Login Info   ${user_id}    ${user_id}       ${user_password}      ${user_password}12
+
+    Shared_Keywords.Validate Message Error    The passwords do not match.
+
+Incorrect Account number
+    [Arguments]  ${temp_user}      ${temp_password}   ${account_numbers}
+    [Documentation]  The purpose of this test is to validate the error message by entering the wrong account number for first time login users
+    set appium timeout  30 seconds
+    go to account authentication screen   ${temp_user}      ${temp_password}
+    Add Account   ${account_numbers}
+    Shared_Keywords.Validate Message Error  We did not recognize the Account Number you entered. Please try again.
+Incorrect UserId and PW
+    [Arguments]  ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+    [Documentation]  Open Banking app
+    set appium timeout  30 seconds
+    go to set up login info  ${temp_user}      ${temp_password}   ${account_numbers}  ${user_id}    ${user_password}
+    Negative Set Login Info   ${user_id}    ${user_id}12       ${user_password}      ${user_password}12
+    Shared_Keywords.Validate Message Error  The user ids do not match.
+New Password 12 Characters
+    [Arguments]  ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+    set appium timeout  30 seconds
+    run first login    ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+
+New Password 6 Characters
+    [Arguments]  ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+    set appium timeout  30 seconds
+    run first login    ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+
+No Paperless accounts selected
+    [Arguments]  ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+    set appium timeout  30 seconds
+    run first login   ${temp_user}     ${temp_password}    ${account_numbers}  ${user_id}    ${user_password}
+Switch between Rob mobile and Desktop
+    [Arguments]  ${user}   ${answer}    ${password}
+    set appium timeout  30 seconds
+     AppiumLibrary.wait until element is visible  xpath=//*[contains(@resource-id,'et_user_id')]
+Go To Account Authentication Screen
+    [Arguments]  ${temp_user}   ${temp_password}
+     AppiumLibrary.wait until element is visible  id=et_user_id
+     AppiumLibrary.input text      id=et_user_id       ${temp_user}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until element is visible   id=tv_temporary_password_label
+     AppiumLibrary.input text         id=tv_temporary_password     ${temp_password}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until element is visible     id=tv_step_description
+     AppiumLibrary.Page Should Contain Text    Select authentication method
+     AppiumLibrary.Page Should Contain Text    Provide a valid Santander Bank Account Number or a Santander Debit or Credit Card Number
+     AppiumLibrary.Page Should Contain Text    ACCOUNT
+     AppiumLibrary.Page Should Contain Text    DEBIT/ATM OR CREDIT CARD NUMBER
+     get screenshot
+
+Go To Set Up Login Info
+    [Arguments]  ${temp_user}   ${temp_password}  ${account}  ${user_id}  ${password}
+     go to account authentication screen   ${temp_user}   ${temp_password}
+     Add Account   ${account}
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains      Set up your Login Info
+     get screenshot
+#     AppiumLibrary.click element     id=action_help
+#     AppiumLibrary.wait until element is visible   id=tv_text
+#     log  Help Message is visible
+#     get screenshot
+#     AppiumLibrary.click element        id=ib_close
+
+
+Add Account
+    [Arguments]  ${account}
+    ${Item_Lenght}    get length    ${account}
+     run keyword if    ${Item_Lenght} > 11   AppiumLibrary.click element    id=product_card_view   ELSE   AppiumLibrary.click element    id=product_account_view
+     get screenshot
+     AppiumLibrary.input text    id=et_product_identifier   ${account}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+
+Set Login Info
+     [Arguments]   ${user_id}  ${password}
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_user_id      ${user_id}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_verify_user_id    ${user_id}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.Page Should Contain Text         New User ID
+     AppiumLibrary.Page Should Contain Text         Verify your New User ID
+     AppiumLibrary.Page Should Contain Text         New Password
+     AppiumLibrary.Page Should Contain Text         Verify your New Password
+     scroll element down to view        id=et_verify_password
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_password     ${password}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=et_verify_password        ${password}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     scroll element down to view   id=bt_continue
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+Negative Set Login Info
+     [Arguments]   ${user_id}  ${user_id1}   ${password}  ${password1}
+     AppiumLibrary.input text         id=et_user_id      ${user_id}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=et_verify_user_id    ${user_id1}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.Page Should Contain Text         New User ID
+     AppiumLibrary.Page Should Contain Text         Verify your New User ID
+     AppiumLibrary.Page Should Contain Text         New Password
+     AppiumLibrary.Page Should Contain Text         Verify your New Password
+     AppiumLibrary.input text         id=com.sovereign.santander.pre:id/et_password     ${password}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.input text         id=et_verify_password        ${password1}
+     AppiumLibrary.hide keyboard
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+
+Run First Login
+    [Arguments]  ${temp_user}     ${temp_password}      ${account}      ${user_id}      ${password}
+    [Documentation]  First time login with temp id and temp id from ROB portal and leave the process in the middle.
+     set appium timeout  60 seconds
+     go to set up login info   ${temp_user}     ${temp_password}      ${account}      ${user_id}      ${password}
+#     AppiumLibrary.click element     id=action_help
+#     AppiumLibrary.wait until element is visible   id=tv_text
+#     log  Help Message is visible
+#     get screenshot
+#     AppiumLibrary.click element        id=ib_close
+#     sleep  2s
+
+     AppiumLibrary.get current context
+     Set Login Info   ${user_id}      ${password}
+     Validate Text  Your User ID and Password have been created
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains     Electronic Communications Disclosure
+     get screenshot
+     AppiumLibrary.click element   id=cb_accept
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains     Online Banking Agreement
+     get screenshot
+     AppiumLibrary.click element     id=cb_accept
+     get screenshot
+     AppiumLibrary.element attribute should match    id=bt_continue      enabled     true
+     AppiumLibrary.click element      id=bt_continue
+     Select Secure Image
+     Complete Challenge Questions
+     AppiumLibrary.Page Should Contain Text    Verify your Santander Secure Access Information
+     Scroll Element Down To View   id=bt_continue
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains    Verify your Contact Information
+     AppiumLibrary.click element      id=bt_continue
+     AppiumLibrary.wait until page contains    Select Accounts To Go Paperless
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue
+     #AppiumLibrary.wait until element is visible     alertTitle
+     #AppiumLibrary.click element     button1
+     #run keyword and ignore error    AppiumLibrary.click element     id=android:id/button1
+     AppiumLibrary.wait until element is visible   id=bt_continue
+     get screenshot
+     AppiumLibrary.click element     id=bt_continue
+     AppiumLibrary.wait until page contains     My Money
+     get screenshot
+
+Select Secure Image
+    AppiumLibrary.wait until page contains     Select your Santander Secure Image
+     Log  Select your Santander Secure Image is Visible
+     get screenshot
+     AppiumLibrary.Page Should Contain Text     Select Category
+     Log  Select Category is visible
+     AppiumLibrary.Page Should Contain Text     Select your Image
+     Log  Select your Image is visible
+     AppiumLibrary.Page Should Contain Text     Set up Profile Information
+     Log   Set up Profile Information is visible
+     AppiumLibrary.Page Should Contain Text     First Time Login
+     Log   First Time Login is visible
+     AppiumLibrary.Page Should Contain Text   Step 3/4
+     log  Phase 3 is visible
+Complete Challenge Questions
+    @{E}    AppiumLibrary.Get Webelements      id=rv_block
+     AppiumLibrary.click element     @{E}[1]
+     get screenshot
+     Scroll Element Down To View    id=et_phrase
+     AppiumLibrary.input text    id=et_phrase      mobileretails
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View    et_challenge_1
+     AppiumLibrary.input text    et_challenge_1      test
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View    et_challenge_2
+     AppiumLibrary.input text    et_challenge_2      test
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View    et_challenge_3
+     AppiumLibrary.input text    et_challenge_3      test
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View       id=bt_continue
+     AppiumLibrary.click element      id=bt_continue
+
+Select Go Paperless All_4
+     AppiumLibrary.wait until page contains    Select Accounts To Go Paperless
+     get screenshot
+     AppiumLibrary.click element      id=bt_continue

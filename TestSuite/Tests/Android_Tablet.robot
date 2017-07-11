@@ -1,0 +1,351 @@
+*** Settings ***
+
+Library          AppiumLibrary     run_on_failure=get screenshot
+Variables        ../Data/testdata.py
+Resource         ../PO/login.robot
+Resource         ../PO/overview.robot
+Resource         ../PO/account_details.robot
+Resource         ../PO/term_of_use.robot
+Resource         ../PO/credit_card.robot
+Resource         ../PO/statements.robot
+Resource         ../PO/bill_pay.robot
+Resource         ../PO/first_login.robot
+Resource         ../PO/quickbalance.robot
+#Resource         TestSuite/Android_PO/contact.robot
+#Resource         TestSuite/Android_PO/transfers.robot
+Library          DateTime
+Resource         ../Resources/mobile_retail.robot
+Resource         ../PO/transfers.robot
+Resource         ../PO/forgot_password.robot
+
+Documentation   Android Tablet Report  Pixel C
+#C:\Users\x368871\AppData\Local\Android\Sdk
+Documentation   Android Tablet
+Test Setup          Open_Nexus9  #lounch_samsung_tablet  #Lounch_Nexus_7_Sim  Lounch_Pixel_C_Sim
+Test Teardown     Close Application
+*** Variables ***
+
+${path}=  Data/CreditCards.xlsx
+${sheet} =  2272017_051332986
+*** Test Cases ***
+
+#ACCOUNT OVERVIEW
+#Test Case 1:
+Login With Incorrect User Id
+    [Tags]  Login  Login Negative
+    [Documentation]  Login With Incorrect User Id  Negative
+    login.Incorrect User Id  rob  test  1234abcd
+
+Login With Incorrect Password
+    [Tags]  Login  Login Negative
+    [Documentation]  Login With Incorrect Password  Negative
+    login.Incorrect Password  robhealthcheck1  test  efvghabcd
+Main_Login_Page
+    [Tags]  Login  Login Positive
+    [Documentation]  Main_Login_Page Positive
+    Login_App  lcorobm64  test  1234abcd
+
+Log Off
+    [Tags]  Login  Login Positive
+    [Documentation]  Log Off  Positive
+    Login_App  lcorobm64  test  1234abcd
+    login.Log Off
+
+First Login Incorrect Account number Error Message
+    [Tags]  First Login  First Login Negative
+    first_login.Incorrect Account number Error Message     968981357     san1231357     34595640
+First Login Incorrect Debit Card number Error Message
+    [Tags]  First Login  First Login Negative
+   first_login.Incorrect Debit Card number Error Message   968981357     san1231357     40816566980934960
+First Login Incorrect Credit Card number Error Message
+    [Tags]  First Login  First Login Negative
+    first_login.Incorrect Credit Card number Error Message   968981357     san1231357     40816566980934960
+First Login Negative New Password
+    [Tags]  First Login  First Login Negative
+    first_login.New Password Negative    968981357     san1231357     5129920072044799        Testid8      sov12345
+First Login Incorrect Account number
+    [Tags]  First Login  First Login Negative
+    first_login.Incorrect Account number   968981357     san1231357     34595640   
+
+First Login New incorrect UserId and PW and new PW doesnt match
+    [Tags]  First Login  First Login Negative
+    first_login.Incorrect UserId and PW     968981357     san1231357     5129920072044799        Testid8      sov12345
+
+First Login User leaves the app in the middle on the procces
+    [Tags]  First Login  First Login Positive
+    first_login.Leave in the middle     969606643     san1236643     5410710517523624        Testid8      sov12345
+First Login Edit SSA fields
+    [Tags]  First Login  First Login Positive
+    first_login.Edit SSA fields   robhealthcheck1  test  sov12345
+First Login New Password 12 Characters
+    [Tags]  First Login  First Login Positive
+    first_login.New Password 12 Characters    968981357     san1231357    4081656698091496    Testid15     sov12345
+First Login New Password 6 Characters
+    [Tags]  First Login  First Login Positive
+    first_login.New Password 6 Characters  991008912	san1238912	9995114453  lcoben86  sov123
+
+First Login No Paperless accounts selected
+    [Tags]  First Login  First Login Positive
+    first_login.No Paperless accounts selected  991247110	san1237110	4081650816778167   lcoben87   sov12345
+First Login Switch between Rob mobile and Desktop
+    [Tags]  [Tags]  First Login  First Login Positive
+    first_login.Switch between Rob mobile and Desktop   robhealthcheck1  test  sov12345
+
+Account Overview
+      [Tags]  Account_Overview
+      login into tablet  ccdata2  test  sov12345
+      Tablet Account_Overview   *4099
+#      close application
+#Test test Case 2:
+Overview_Account_Details
+     [Tags]  Account_Overview
+      login into tablet   robhealthcheck1   test   sov12345
+      Tablet Account Details   *8615
+
+#Test test Case 3:
+Filtering_Option_All
+    [Tags]  Account_Overview  Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering Option All  *8615   20170313   20170426
+
+#Test test Case 4:
+Filtering_Option_IN
+    [Tags]  Account_Overview   Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering_Option_IN  *3564   20170401   20170615
+#Test test Case 5:
+Filtering_Option_OUT
+    [Tags]  Account_Overview   Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering_Option_OUT  *3564   20170401   20170615
+I Want To options
+    [Tags]  Account_Overview
+      login into tablet   robhealthcheck1   test   sov12345
+      Tablet I Want To options  *8615
+#Test test Case 6:
+Credit Cards Account Overview
+      [Tags]  Account Overview
+      login into tablet  ccdata2  test  sov12345
+      Tablet Account_Overview  *4099
+#      close application
+#Test test Case 7:
+Credit Cards Overview_Account_Details
+    [Tags]  Overview_Account_Details
+      login into tablet   ccdata2  test  sov12345
+      Tablet Credit Details   *4099
+
+#Test test Case 8:
+Credit Cards Filtering_Option_All
+    [Tags]  Account_Overview   Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering Option All  *8615   20170313   20170426
+
+#Test test Case 9:
+Credit Cards Filtering_Option_IN
+    [Tags]  Account_Overview   Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering_Option_IN  *8615   20170313   20170426
+#Test test Case 10:
+Credit Cards Filtering_Option_OUT
+    [Tags]  Account_Overview   Filters
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Filtering_Option_OUT  *8615   20170313   20170426
+
+Contact_Us
+    [Tags]  Contact Us
+     login into tablet   robhealthcheck1   test   sov12345
+     Tablet Contact_Us
+#Test test Case 16:
+
+Go_Paperless_Any
+    [Tags]  GO PAPERLESS
+    Login_App  lcoben3   test   sov12345
+    Go_Paperless_Any_Account  *4453
+
+Go_Paperless_Some
+    [Tags]  GO PAPERLESS
+     Login_App  lcoben3   test   sov12345
+    Go_Paperless_Any_Some  *8866   *7460
+
+Go_Paperless_All
+    [Tags]  GO PAPERLESS
+    Login_App  lcoben3   test   sov12345
+    Go_Paperless_All_Account
+Help
+    [Tags]   HELP
+     Login_App  robhealthcheck1   test   sov12345
+     Tablet Help_Options
+
+Locations
+    [Tags]   LOCATIONS
+     Login_App  robhealthcheck1   test   sov12345
+     Tablet Locations
+#Test test Case 20:
+Online_Banking_Agreement
+    [Tags]  Terms  MISC
+    Login_App  robhealthcheck1   test   sov12345
+    Online Banking Service Agreement
+#Test test Case 21:
+Privacy_Policy
+    [Tags]  Terms  MISC
+    Login_App  robhealthcheck1   test   sov12345
+    Privacy Policy
+#Test test Case 22:
+Terms_Of_Use
+    [Tags]  Terms  MISC
+    Login_App  robhealthcheck1   test   sov12345
+    Terms of use
+Statement_List
+    [Tags]  Statements
+    Login_App  lcorobm64  test  1234abcd
+    statements.Tablet List Of Statements
+#Test Case 24:
+Statement_Search
+    [Tags]  Statements
+     Login_App  lcorobm64  test  1234abcd
+#    Search date with in six months
+    statements.Tablet Statements_Search    *4602     20161101   20170427
+    Validate Statement Details
+No_Statements_Available
+    [Tags]  Statements
+    Login_App  lcorobm64  test  1234abcd
+    statements.Tablet Statements_Search    *4602     20170312   20170427
+    statements.Validate No_Statements_Available
+
+Statements Search Negative
+    [Tags]  Statements
+##    Search date more than six months
+      Login_App  robhealthcheck1  test  sov12345
+      statements.Tablet Statements_Search    *8526     20161001   20170515
+      statements.Tablet Statements Search Negative
+      get screenshot
+
+Bill Pay Single Payment
+##    Search date more than six months
+    [Tags]  Single_payment  Bill Pay
+     Login_App  robtest4  test  1234abcd
+     bill_pay.Single Payment    Test Biller 4   0.3  20170623
+######
+#Test Case 28:
+Bill Pay Single Payment Cancel
+  [Tags]   Cancel_Single_Payment  Bill Pay
+##    Search date more than six months
+    Login_App  robtest4  test  1234abcd
+    bill_pay.Single Payment Cancel    0.23
+
+
+#Test Case 33:
+Transfer Beetween Account
+    [Tags]  Transfers  Transactions   Transfer Beetween Account
+     Login_App  lcotest1009  test  sov12345
+     Make Transfer Beetween Account   0446  0403
+
+#Test Case 34:
+Transfer Beetween Account Future
+     [Tags]   Transfers   Transactions   Transfer Beetween Account
+     Login_App  lcorobm64  test  1234abcd
+     Tablet Transfer Beetween Account Future   4696  4785  20170617
+
+#Test Case 35:
+Transfer To Somone Else
+     [Tags]  Transfers  To Somone Else
+     Login_App  lcorobm64  test  1234abcd
+     make transfer to someone else  4696  4785
+#Test Case 36:
+Transfer To Somone Else Future
+     [Tags]  Transfers  To Somone Else
+     Login_App  lcorobm64  test  1234abcd
+     Tablet Transfer To Someone Else Future  4696  4785  20170617
+
+Forgot Password - Negative - Block card after 3 attempts with a wrong PIN
+    Login_App  robhealthcheck  test  sov12345
+#
+Forgot Password Negative Incorrect UserID
+    [Tags]  Forgot Password Negative
+    forgot_password.Tablet Incorrect UserID  ldbghe  20000610
+
+Forgot Password new pw is empty
+    [Tags]  Forgot Password Negative
+    Tablet New Password Is Empty   lcoben3  19900101   test   2872   7101  sov12345  ${EMPTY}
+
+
+Forgot Password - Negative - new pw is just characters (no digits)
+    [Tags]  Forgot Password Negative
+    Tablet new pw is just characters no digits   lcoben3  19900101   test   2872   7101   lcotest  lcotest
+
+Forgot Password - Negative - new pw is just numeric digits
+    [Tags]  Forgot Password Negative
+    Tablet new pw is just numeric digits   lcoben3  19900101   test   2872   7101   1234567  1234567
+
+Forgot Password - Negative - new pw is less than 6 alphanumeric characters
+    [Tags]  Forgot Password Negative
+    Tablet new pw is less than 6 alphanumeric characters   lcoben3  19900101   test   2872   7101   sov12  sov12
+
+Forgot Password - Negative - new pw is more than 12 alphanumeric digits
+    [Tags]  Forgot Password Negative
+    Tablet Restore Password Successfully   lcoben3  19900101   test   2872   7101   sov12345678910  sov12345678910
+
+Forgot Password - Negative Test Case - new pw that doesn’t match
+    [Tags]  Forgot Password Negative
+    Tablet new pw that not match  lcoben3  19900101   test   2872   7101   sov12345  bov1234
+
+Forgot Password - Recover a password with minimum length (6 alphanumeric characters)
+    [Tags]  Forgot Password Positive
+    Tablet Restore Password Successfully   lcoben3  19900101   test   2872   7101   ben12345  ben12345
+
+Forgot Password - Recover a pw for a Credit Card
+    [Tags]  Forgot Password Positive
+    Tablet Restore Password Successfully   lcoben4  19900101   test   2872   7101   ben12345  ben12345
+
+Forgot Password - Recover a pw for a Debit Card
+    [Tags]  Forgot Password Positive
+    Tablet Restore Password Successfully   lcoben4  19900101   test   2872   7101   ben12345  ben12345
+
+Forgot Password - Recover a pw with maximum length (12 alphanumeric characters)
+    [Tags]  Forgot Password Positive
+    Tablet Restore Password Successfully   lcoben7  19900101   test   2872   7101   lcotest12345  lcotest12345
+
+Forgot Password - Recover a pw with medium length (9 alphanumeric characters)
+    [Tags]  Forgot Password Positive
+    Tablet Restore Password Successfully   lcoben8  19900101   test   2872   7101   lcotest12  lcotest12
+
+Quick Balance Checking Account
+    [Tags]  Quick Balance
+     login_app and remember credential  lcorobm64  test  1234abcd
+     quickbalance.Checking Account  *4602
+     Validate Account in Quick Settings  SANTANDER PREMIER PLUS CHECKING
+     log in quick settings  test  1234abcd
+     quickbalance.Checking Account  *4696
+     Validate Account in Quick Settings  SANTANDER PREMIER PLUS CHECKING
+     Switch User ID
+
+Quick Balance - Savings Account
+     [Tags]  Quick Balance
+     login_app and remember credential  lcorobm64  test  1234abcd
+     quickbalance.Checking Account  *4785
+     Validate Account in Quick Settings  SANTANDER SAVINGS
+     Switch User ID
+
+
+Quick Balance - Credit Card Account
+      [Tags]  Quick Balance
+     login_app and remember credential  lcorobm64  test  1234abcd
+     quickbalance.Checking Account  *2331
+     Validate Account in Quick Settings  BRAVO
+     Switch User ID
+Quick Balance - Heloc Account
+      [Tags]  Quick Balance
+     login_app and remember credential  lcorobm64  test  1234abcd
+     quickbalance.Checking Account  *7274
+     Validate Account in Quick Settings  SIMPLY RIGHT CHECKING
+     Switch User ID
+Quick Balance - Loan Account
+      [Tags]  Quick Balance
+     login_app and remember credential  robhealthcheck1  test  sov12345
+     quickbalance.Checking Account  *4302
+     Validate Account in Quick Settings  MORTGAGES
+
+Main Login Page Switch User ID
+    [Tags]  Quick Balance
+    Switch User ID
+    Login_App  robhealthcheck1  test  sov12345

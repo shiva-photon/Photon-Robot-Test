@@ -1,0 +1,178 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Resource       ../common.robot
+Resource        ../IOS_PO/ios_main_menu.robot
+Resource        ../IOS_PO/login_user_id_page.robot
+Resource        ../IOS_PO/login_answer_page.robot
+Resource        ../IOS_PO/login_password_page.robot
+*** Variables ***
+${SCREENSHOTS}     ../IOS_Results${/}filename=${PREV_TEST_NAME}-{index}.png
+${counter} =  1
+*** Keywords ***
+
+Lounch_App
+      set appium timeout  30 seconds
+      common.open android mobile
+
+Login Phone Into Mobile Retails
+    [Arguments]   ${user}   ${answer}    ${password}
+    [Tags]   Login
+    set appium timeout  40 seconds
+    login_user_id_page.Enter User ID     ${user}
+    login_user_id_page.Click On Continue Button
+    login_answer_page.Add Login Answer   ${answer}
+    login_answer_page.Click On Continue Button
+    login_password_page.Add Login Password   ${password}
+    login_password_page.Click On Continue Button
+    Shared_Keywords.validate text   My Money
+    Shared_Keywords.get screenshot
+Login without answer
+    [Arguments]   ${user}   ${answer}    ${password}
+    [Tags]   Login
+    set appium timeout  40 seconds
+    login_user_id_page.Enter User ID     ${user}
+    login_user_id_page.Click On Continue Button
+    login_password_page.Add Login Password   ${password}
+    login_password_page.Click On Continue Button
+    Shared_Keywords.validate text   My Money
+    Shared_Keywords.get screenshot
+
+Login Into Ipad
+    Login Phone Into Mobile Retails
+    [Arguments]   ${user}   ${answer}    ${password}
+    [Tags]   Login
+    set appium timeout  40 seconds
+    login_user_id_page.Enter User ID     ${user}
+    login_user_id_page.Click On Continue Button
+    login_answer_page.Add Login Answer   ${answer}
+    login_answer_page.Click On Continue Button
+    login_password_page.Add Login Password   ${password}
+    login_password_page.Click On Continue Button
+    Shared_Keywords.validate text   My Money
+    Shared_Keywords.get screenshot
+
+
+Incorrect User Id
+    [Arguments]  ${user}  ${password}
+    [Documentation]  User Logs in with an incorrect user ID. Validate message The user ID and/or password is incorrect. Please try again.
+     set appium timeout  30 seconds
+     login_user_id_page.Enter User ID     ${user}
+     login_user_id_page.Click On Continue Button
+     login_password_page.Add Login Password   ${password}
+     login_password_page.Click On Continue Button
+     sleep  2s
+     Shared_Keywords.validate text        The user ID and/or password is incorrect. Please try again.
+     AppiumLibrary.click element                   name=Ok
+
+Incorrect Password
+     [Arguments]  ${user}   ${answer}    ${password}
+     [Documentation]  User Logs in with an incorrect password. Validate message We did not recognize the User ID and/or Password you entered.
+    set appium timeout  40 seconds
+    login_user_id_page.Enter User ID     ${user}
+    login_user_id_page.Click On Continue Button
+    login_answer_page.Add Login Answer   ${answer}
+    login_answer_page.Click On Continue Button
+    login_password_page.Add Login Password   ${password}
+    login_password_page.Click On Continue Button
+    Shared_Keywords.validate text        We did not recognize the User ID and/or Password you entered. Please try again. If you need assistance, please call 1-877-768-2265.Representatives are available 7 days a week between 6:00 a.m. to 10:00 p.m.
+
+Block User After 3 Times
+    [Arguments]  ${user}   ${answer}
+    [Documentation]  User Logs in with an incorrect answer 3 times and blocked account
+     set appium timeout  40 seconds
+     AppiumLibrary.wait until element is visible     id=Enter your Online Banking User ID
+     AppiumLibrary.capture page screenshot          ${SCREENSHOTS}
+     AppiumLibrary.input text                       name=user_nickname   ${user}
+     AppiumLibrary.click element                    name=forgotPwd_btn
+     AppiumLibrary.wait until element is visible    name=This is a device I use frequently. Remember it.
+     AppiumLibrary.capture page screenshot
+     AppiumLibrary.input text                      //XCUIElementTypeSecureTextField[1]   ${answer}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.click element                   name=Continue
+     AppiumLibrary.wait until page contains        You did not provide the correct answer to your Challenge Question. Please, try again.
+     AppiumLibrary.click element                   name=Ok
+     clear text                       //XCUIElementTypeSecureTextField[1]
+     AppiumLibrary.input text                      //XCUIElementTypeSecureTextField[1]   ${answer}
+     AppiumLibrary.click element                   name=Continue
+
+Switch User ID
+    [Arguments]  ${user}   ${answer}    ${password}
+    [Documentation]  User Logs in with validate credentials and switch to a different user. Account needs to be set up for quick setting
+
+Main Login Page
+      [Arguments]  ${user}   ${answer}    ${password}
+      [Documentation]  User Logs in with validate credentials. Validate Main Page
+     Login_App  ${user}   ${answer}    ${password}
+
+
+Log Off
+    [Documentation]   Validate that user can log in with valid credentials and log out
+    set appium timeout  30 seconds
+    ios_main_menu.Go To Log Off
+    AppiumLibrary.click element   name=Cancel
+    AppiumLibrary.wait until page does not contain element  name=Cancel
+    AppiumLibrary.capture page screenshot
+    AppiumLibrary.click element      //XCUIElementTypeNavigationBar["wdName==Products_Overview_WrapperView"]/XCUIElementTypeButton[1]
+    AppiumLibrary.capture page screenshot
+    ios_main_menu.Go To Log Off
+    AppiumLibrary.click element   name=Ok
+    AppiumLibrary.wait until page contains     Enter your Online Banking User ID
+    AppiumLibrary.capture page screenshot
+
+Add user id
+    [Arguments]  ${user}
+     AppiumLibrary.wait until page contains        Enter your Online Banking User ID
+     AppiumLibrary.capture page screenshot
+     AppiumLibrary.input text                       user_nickname   ${user}
+     AppiumLibrary.hide keyboard
+
+Only Add User Id text
+    [Arguments]  ${user}
+    AppiumLibrary.wait until page contains        Enter your Online Banking User ID
+     AppiumLibrary.capture page screenshot
+     AppiumLibrary.input text                       user_nickname   ${user}
+
+
+Add user id and remember credential
+    [Arguments]  ${user}
+     AppiumLibrary.wait until page contains        Enter your Online Banking User ID
+     AppiumLibrary.capture page screenshot
+     AppiumLibrary.input text                       user_nickname   ${user}
+     AppiumLibrary.hide keyboard
+     AppiumLibrary.click element   id=cb_remember_user
+     Get Screenshot
+     Scroll Element Down To View  id=bt_continue
+     AppiumLibrary.click element  id=bt_continue
+Add Login Answer
+    [Arguments]   ${answer}
+    AppiumLibrary.wait until element is visible   id=et_answer
+    Get Screenshot
+    AppiumLibrary.input text   id=et_answer    ${answer}
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View  id=bt_continue
+     AppiumLibrary.click element   id=bt_continue
+
+Add Login Password
+    [Arguments]  ${password}
+    AppiumLibrary.wait until element is visible  id=et_password
+     Get Screenshot
+     AppiumLibrary.input text     id=et_password      ${password}
+     AppiumLibrary.hide keyboard
+     Scroll Element Down To View  id=bt_continue
+     AppiumLibrary.click element  id=bt_continue
+     AppiumLibrary.wait until element is visible   xpath=//*[contains(@text,'My Money')]
+     Get Screenshot
+
+Login_To_MOB
+    [Arguments]  ${user}   ${answer}    ${password}
+     set appium timeout  30 seconds
+     Add user id  ${user}
+     Add Login Answer  ${answer}
+     Add Login Password  ${password}
+
+#Login_App And Remember Credential
+#    [Arguments]  ${user}   ${answer}    ${password}
+#     Add user id and remember credential  ${user}
+#     Add Login Answer  ${answer}
+#     Add Login Password  ${password}

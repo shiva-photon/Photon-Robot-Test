@@ -1,0 +1,29 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Resource       ../Resources/common.robot
+Resource      ../Resources/Shared_Keywords.robot
+*** Variables ***
+${SCREENSHOTS}     ../IOS_Results${/}filename=${PREV_TEST_NAME}-{index}.png
+${counter} =  1
+
+*** Keywords ***
+Enter User ID
+    [Arguments]  ${user}
+    AppiumLibrary.wait until element is visible  user_id_field
+    Shared_Keywords.Get Screenshot
+    AppiumLibrary.input text   user_id_field   ${user}
+    AppiumLibrary.click element   santander_logo
+    AppiumLibrary.hide keyboard
+
+Check Remember Me
+    AppiumLibrary.click element    //XCUIElementTypeStaticText["wdName==Remember me"]/preceding-sibling::XCUIElementTypeButton[1]
+
+Click On Continue Button
+    AppiumLibrary.click element   continue_btn
+
+Click On Forget Password
+     AppiumLibrary.click element  forgotPwd_btn
+
+
+

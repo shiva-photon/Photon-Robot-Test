@@ -1,0 +1,43 @@
+*** Settings ***
+Library        AppiumLibrary
+#Library        ExcelLibrary
+Library        robot.libraries.String
+Resource       ../Resources/Shared_Keywords.robot
+Resource         ../PO/main_menu.robot
+*** Keywords ***
+
+
+View Account Details
+     [Arguments]  ${account1}
+    Page Should Contain Text       My Money
+    log  My money botton is visible
+    Select Credit Card Account   ${account1}
+    get screenshot
+    AppiumLibrary.click element   xpath=//*[contains(@text,'I WANT TO …')]
+    AppiumLibrary.wait until element is visible  xpath=//*[contains(@text,'View Statements')]
+    get screenshot
+    AppiumLibrary.click element   xpath=//*[contains(@text,'Make a Payment')]
+    AppiumLibrary.wait until element is visible  xpath=//*[contains(@text,'Single Payment')]
+    get screenshot
+    AppiumLibrary.page should contain element    xpath=//*[contains(@text,'Autopay')]
+    AppiumLibrary.page should contain element    xpath=//*[contains(@text,'Manage Cards')]
+    AppiumLibrary.wait until element is visible  xpath=//*[contains(@text,'View Credit Card Details')]
+    AppiumLibrary.click element  xpath=//*[contains(@text,'View Credit Card Details')]
+    AppiumLibrary.wait until page contains  FULL CARD NUMBER
+    AppiumLibrary.page should contain text  CURRENT BALANCE
+    AppiumLibrary.page should contain text  AVAILABLE CREDIT
+    AppiumLibrary.page should contain text  LAST STATEMENT BALANCE
+    AppiumLibrary.page should contain text  LAST PAYMENT RECEIVED
+    AppiumLibrary.click element        id=bt_value
+    get screenshot
+    AppiumLibrary.go back
+    AppiumLibrary.wait until element is visible   xpath=//*[contains(@text,'I WANT TO …')]
+    get screenshot
+    AppiumLibrary.wait until element is visible  id=container_button_filter
+    Return To Overview
+
+
+
+
+
+
